@@ -1,9 +1,5 @@
 package mate.academy.util;
 
-/**
- * Created by yusufcakmak on 8/3/15.
- */
-
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
