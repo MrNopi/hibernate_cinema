@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
@@ -12,6 +13,7 @@ import mate.academy.service.MovieSessionService;
 public class Main {
     private static Injector injector = Injector.getInstance("mate.academy");
     public static void main(String[] args) {
+        LocalDateTime time = LocalDateTime.now();
         // Movie test
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 
@@ -40,17 +42,18 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setMovie(movie);
-        movieSession.setShowTime(LocalDateTime.now());
+        movieSession.setShowTime(time);
         movieSessionService.add(movieSession);
 
         MovieSession movieSession2 = new MovieSession();
         movieSession2.setCinemaHall(cinemaHall2);
         movieSession2.setMovie(movie2);
-        movieSession2.setShowTime(LocalDateTime.now());
+        movieSession2.setShowTime(time);
         movieSessionService.add(movieSession2);
 
         System.out.println("Movies: \n" + movieService.getAll());
         System.out.println("Halls: \n" + cinemaHallService.getAll());
-        System.out.println("Sessions: \n" + movieSessionService.getAll());
+        System.out.println("Sessions 1: \n" + movieSessionService.findAvailableSessions(movie.getMovieId(), time.toLocalDate()));
+        System.out.println("Sessions 2: \n" + movieSessionService.findAvailableSessions(movie2.getMovieId(), time.toLocalDate()));
     }
 }

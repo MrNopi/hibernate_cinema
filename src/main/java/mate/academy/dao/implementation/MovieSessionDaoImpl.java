@@ -1,9 +1,13 @@
 package mate.academy.dao.implementation;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Dao;
+import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -29,18 +33,24 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> getAll() {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaQuery<MovieSession> criteriaQuery = session.getCriteriaBuilder()
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<MovieSession> criteriaQuery = builder
                     .createQuery(MovieSession.class);
-            criteriaQuery.from(MovieSession.class);
+            Root<MovieSession> root = criteriaQuery
+                    .from(MovieSession.class);
+            criteriaQuery
+                    .select(root)
+                    .where(builder.greaterThanOrEqualTo(root
+                                    .get("showTime").as(LocalDate.class), date));
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Unable to get all movie sessions", e);
+            throw new RuntimeException("Unable to find available session", e);
         }
     }
 }

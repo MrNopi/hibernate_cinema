@@ -1,6 +1,10 @@
 package mate.academy.dao;
 
+import java.util.List;
 import mate.academy.model.CinemaHall;
 
-public interface CinemaHallDao extends GeneticDao<CinemaHall> {
+public interface CinemaHallDao {
+    CinemaHall add(CinemaHall t);
+
+    List<CinemaHall> getAll();
 }
