@@ -17,7 +17,7 @@ public class UserDaoImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Long id = (Long)session.save(user);
+            Long id = (Long) session.save(user);
             transaction.commit();
             user.setId(id);
             return user;
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
                     .select(root)
                     .where(builder
                             .equal(root
-                            .get("email"), email));
+                                    .get("email"), email));
             return session.createQuery(query).uniqueResult();
         }
     }

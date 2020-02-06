@@ -18,6 +18,7 @@ public class Main {
     private static Injector injector = Injector.getInstance("mate.academy");
     public static void main(String[] args) {
         LocalDateTime time = LocalDateTime.now();
+
         // Movie test
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 

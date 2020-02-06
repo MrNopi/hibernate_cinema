@@ -12,10 +12,11 @@ import mate.academy.service.AuthenticationService;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     UserDao userDao;
+
     @Override
     public User login(String email, String password) throws AuthenticationException {
         User user = userDao.findByEmail(email);
-        if(user != null) {
+        if (user != null) {
             if (!user.getPassword().equals(hashPassword(password, user.getSalt()))) {
                 throw new AuthenticationException("Incorrect login or password");
             }
@@ -45,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             messageDigest.update(salt);
             byte[] digest = messageDigest.digest(password.getBytes());
 
-            for(byte b : digest) {
+            for (byte b : digest) {
                 str.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
