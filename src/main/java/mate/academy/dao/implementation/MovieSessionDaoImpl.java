@@ -34,7 +34,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> criteriaQuery = builder
@@ -47,9 +46,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                                     .get("showTime").as(LocalDate.class), date));
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             throw new RuntimeException("Unable to find available session", e);
         }
     }

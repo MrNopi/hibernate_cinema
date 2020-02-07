@@ -2,18 +2,23 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import mate.academy.exception.AuthenticationException;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
+import mate.academy.model.User;
+import mate.academy.service.AuthenticationService;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
+import mate.academy.service.UserService;
 
 public class Main {
     private static Injector injector = Injector.getInstance("mate.academy");
     public static void main(String[] args) {
         LocalDateTime time = LocalDateTime.now();
+
         // Movie test
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 
@@ -51,6 +56,26 @@ public class Main {
         movieSession2.setShowTime(time);
         movieSessionService.add(movieSession2);
 
+        // User test
+        UserService userService = (UserService) injector.getInstance(UserService.class);
+        AuthenticationService authenticationService =
+                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+        User user = new User();
+
+        user.setEmail("test@gmail.com");
+        user.setPassword("pass");
+            user = authenticationService.register(user.getEmail(), user.getPassword());
+        User user2 = null;
+        try {
+            user2 = authenticationService.login("test@gmail.com", "pass");
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println(user);
+        System.out.println(user2);
+        System.out.println(user.equals(user2));
         System.out.println("Movies: \n" + movieService.getAll());
         System.out.println("Halls: \n" + cinemaHallService.getAll());
         System.out.println("Sessions 1: \n" + movieSessionService.findAvailableSessions(movie.getMovieId(), time.toLocalDate()));
