@@ -12,5 +12,7 @@ public interface ShoppingCartService {
 
     void update(ShoppingCart shoppingCart);
 
-    void clear(User user);
+    void clear(ShoppingCart shoppingCart);
+
+    ShoppingCart registerNewShoppingCart(User user);
 }
