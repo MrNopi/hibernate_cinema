@@ -100,18 +100,7 @@ public class Main {
         shoppingCart.setUser(user);
         shoppingCartDao.add(shoppingCart);
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
-        ShoppingCart userCart = shoppingCartService.getByUser(user);
         List<Ticket> tickets = shoppingCartService.getByUser(user).getTickets();
         orderService.completeOrder(tickets, user);
-
-//        System.out.println(user);
-//        System.out.println(userCart);
-//        System.out.println(user);
-//        System.out.println(user2);
-//        System.out.println(user.equals(user2));
-//        System.out.println("Movies: \n" + movieService.getAll());
-//        System.out.println("Halls: \n" + cinemaHallService.getAll());
-//        System.out.println("Sessions 1: \n" + movieSessionService.findAvailableSessions(movie.getMovieId(), time.toLocalDate()));
-//        System.out.println("Sessions 2: \n" + movieSessionService.findAvailableSessions(movie2.getMovieId(), time.toLocalDate()));
     }
 }
