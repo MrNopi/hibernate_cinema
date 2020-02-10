@@ -15,12 +15,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Inject
     private ShoppingCartDao shoppingCartDao;
     @Inject
-    TicketDao ticketDao;
-
-    @Override
-    public ShoppingCart add(ShoppingCart shoppingCart) {
-        return shoppingCartDao.add(shoppingCart);
-    }
+    private TicketDao ticketDao;
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
@@ -42,5 +37,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void update(ShoppingCart shoppingCart) {
         shoppingCartDao.update(shoppingCart);
+    }
+
+    @Override
+    public void clear(User user) {
+        ShoppingCart cart = getByUser(user);
+        cart.getTickets().clear();
+        update(cart);
     }
 }

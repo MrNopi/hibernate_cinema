@@ -91,7 +91,7 @@ public class Main {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.addTicket(ticket);
         shoppingCart.setUser(user);
-        shoppingCartService.add(shoppingCart);
+        //shoppingCartService.add(shoppingCart);
         System.out.println(shoppingCartService.getByUser(user));
 
 

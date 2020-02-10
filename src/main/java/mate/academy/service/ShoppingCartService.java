@@ -5,11 +5,12 @@ import mate.academy.model.ShoppingCart;
 import mate.academy.model.User;
 
 public interface ShoppingCartService {
-    ShoppingCart add(ShoppingCart shoppingCart);
 
     void addSession(MovieSession movieSession, User user);
 
     ShoppingCart getByUser(User user);
 
     void update(ShoppingCart shoppingCart);
+
+    void clear(User user);
 }
