@@ -1,16 +1,10 @@
 package mate.academy.dao.implementation;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.List;
 import mate.academy.dao.ShoppingCartDao;
 import mate.academy.lib.Dao;
 import mate.academy.model.ShoppingCart;
-import mate.academy.model.Ticket;
 import mate.academy.model.User;
 import mate.academy.util.HibernateUtil;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -38,7 +32,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     public ShoppingCart getByUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Long userId = user.getId();
-            Query<ShoppingCart> query = session.createQuery( "SELECT cart FROM shopping_cart cart "
+            Query<ShoppingCart> query = session.createQuery("SELECT cart FROM shopping_cart cart "
                     + "join fetch cart.tickets WHERE cart.id = :id", ShoppingCart.class);
             query.setParameter("id", userId);
             return query.uniqueResult();
