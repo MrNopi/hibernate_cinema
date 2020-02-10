@@ -2,16 +2,20 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import mate.academy.dao.TicketDao;
 import mate.academy.exception.AuthenticationException;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
+import mate.academy.model.ShoppingCart;
+import mate.academy.model.Ticket;
 import mate.academy.model.User;
 import mate.academy.service.AuthenticationService;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
+import mate.academy.service.ShoppingCartService;
 import mate.academy.service.UserService;
 
 public class Main {
@@ -72,13 +76,31 @@ public class Main {
             e.printStackTrace();
         }
 
+        // Shopping cart test
+        ShoppingCartService shoppingCartService = (ShoppingCartService)
+                injector.getInstance(ShoppingCartService.class);
 
-        System.out.println(user);
-        System.out.println(user2);
-        System.out.println(user.equals(user2));
-        System.out.println("Movies: \n" + movieService.getAll());
-        System.out.println("Halls: \n" + cinemaHallService.getAll());
-        System.out.println("Sessions 1: \n" + movieSessionService.findAvailableSessions(movie.getMovieId(), time.toLocalDate()));
-        System.out.println("Sessions 2: \n" + movieSessionService.findAvailableSessions(movie2.getMovieId(), time.toLocalDate()));
+        TicketDao ticketDao = (TicketDao) injector.getInstance(TicketDao.class);
+        Ticket ticket = new Ticket();
+        ticket.setUser(user);
+        ticket.setShowTime(movieSession.getShowTime());
+        ticket.setCinemaHall(cinemaHall);
+        ticket.setMovie(movie);
+        ticket = ticketDao.add(ticket);
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.addTicket(ticket);
+        shoppingCart.setUser(user);
+        shoppingCartService.add(shoppingCart);
+        System.out.println(shoppingCartService.getByUser(user));
+
+
+//        System.out.println(user);
+//        System.out.println(user2);
+//        System.out.println(user.equals(user2));
+//        System.out.println("Movies: \n" + movieService.getAll());
+//        System.out.println("Halls: \n" + cinemaHallService.getAll());
+//        System.out.println("Sessions 1: \n" + movieSessionService.findAvailableSessions(movie.getMovieId(), time.toLocalDate()));
+//        System.out.println("Sessions 2: \n" + movieSessionService.findAvailableSessions(movie2.getMovieId(), time.toLocalDate()));
     }
 }
