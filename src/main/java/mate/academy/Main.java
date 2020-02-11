@@ -2,7 +2,11 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import mate.academy.dao.OrderDao;
+import mate.academy.dao.ShoppingCartDao;
 import mate.academy.dao.TicketDao;
+import mate.academy.dao.implementation.OrderDaoImpl;
 import mate.academy.exception.AuthenticationException;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
@@ -15,8 +19,10 @@ import mate.academy.service.AuthenticationService;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
+import mate.academy.service.OrderService;
 import mate.academy.service.ShoppingCartService;
 import mate.academy.service.UserService;
+import mate.academy.service.implementation.OrderServiceImpl;
 
 public class Main {
     private static Injector injector = Injector.getInstance("mate.academy");
@@ -79,6 +85,7 @@ public class Main {
         // Shopping cart test
         ShoppingCartService shoppingCartService = (ShoppingCartService)
                 injector.getInstance(ShoppingCartService.class);
+        ShoppingCartDao shoppingCartDao = (ShoppingCartDao)injector.getInstance(ShoppingCartDao.class);
 
         TicketDao ticketDao = (TicketDao) injector.getInstance(TicketDao.class);
         Ticket ticket = new Ticket();
@@ -91,16 +98,9 @@ public class Main {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.addTicket(ticket);
         shoppingCart.setUser(user);
-        //shoppingCartService.add(shoppingCart);
-        System.out.println(shoppingCartService.getByUser(user));
-
-
-//        System.out.println(user);
-//        System.out.println(user2);
-//        System.out.println(user.equals(user2));
-//        System.out.println("Movies: \n" + movieService.getAll());
-//        System.out.println("Halls: \n" + cinemaHallService.getAll());
-//        System.out.println("Sessions 1: \n" + movieSessionService.findAvailableSessions(movie.getMovieId(), time.toLocalDate()));
-//        System.out.println("Sessions 2: \n" + movieSessionService.findAvailableSessions(movie2.getMovieId(), time.toLocalDate()));
+        shoppingCartDao.add(shoppingCart);
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        List<Ticket> tickets = shoppingCartService.getByUser(user).getTickets();
+        orderService.completeOrder(tickets, user);
     }
 }
