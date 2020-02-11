@@ -1,6 +1,7 @@
 package mate.academy.model;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "shopping_cart")
 public class ShoppingCart {
@@ -50,14 +49,5 @@ public class ShoppingCart {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "ShoppingCart{" +
-                "id=" + id +
-                ", tickets=" + tickets +
-                ", user=" + user +
-                '}';
     }
 }

@@ -14,7 +14,7 @@ public class TicketDaoImpl implements TicketDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Long id = (Long)session.save(ticket);
+            Long id = (Long) session.save(ticket);
             transaction.commit();
             ticket.setId(id);
             return ticket;
@@ -24,5 +24,5 @@ public class TicketDaoImpl implements TicketDao {
             }
             throw new RuntimeException("Unable to add ticket", e);
         }
-     }
+    }
 }

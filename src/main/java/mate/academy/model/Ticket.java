@@ -1,12 +1,11 @@
 package mate.academy.model;
 
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
 
 @Entity(name = "ticket")
 public class Ticket {
@@ -59,16 +58,5 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showTime=" + showTime +
-                ", user=" + user +
-                '}';
     }
 }

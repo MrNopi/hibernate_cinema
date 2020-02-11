@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Objects;
 
 @Entity(name = "user")
 public class User {
@@ -47,29 +46,5 @@ public class User {
 
     public void setSalt(byte[] salt) {
         this.salt = salt;
-    }
-
-    @Override
-    public String toString() {
-        return "User[" +
-                "id=" + id +
-                ", login='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ']';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId()) &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getPassword(), user.getPassword());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getPassword());
     }
 }

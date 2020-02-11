@@ -1,12 +1,9 @@
 package mate.academy;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import mate.academy.dao.OrderDao;
 import mate.academy.dao.ShoppingCartDao;
 import mate.academy.dao.TicketDao;
-import mate.academy.dao.implementation.OrderDaoImpl;
 import mate.academy.exception.AuthenticationException;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
@@ -21,16 +18,15 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 import mate.academy.service.OrderService;
 import mate.academy.service.ShoppingCartService;
-import mate.academy.service.UserService;
-import mate.academy.service.implementation.OrderServiceImpl;
 
 public class Main {
     private static Injector injector = Injector.getInstance("mate.academy");
+
     public static void main(String[] args) {
-        LocalDateTime time = LocalDateTime.now();
 
         // Movie test
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        MovieService movieService = (MovieService)
+                injector.getInstance(MovieService.class);
 
         Movie movie = new Movie();
         movie.setTitle("Fast and furious");
@@ -41,7 +37,8 @@ public class Main {
         movieService.add(movie2);
 
         //Cinema hall test
-        CinemaHallService cinemaHallService = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService = (CinemaHallService)
+                injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(100);
         cinemaHall.setDescription("Red hall");
@@ -53,28 +50,29 @@ public class Main {
         cinemaHallService.add(cinemaHall2);
 
         // Movie session test
-        MovieSessionService movieSessionService = (MovieSessionService) injector.getInstance(MovieSessionService.class);
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setMovie(movie);
-        movieSession.setShowTime(time);
+        movieSession.setShowTime(LocalDateTime.now());
+        MovieSessionService movieSessionService = (MovieSessionService)
+                injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
 
         MovieSession movieSession2 = new MovieSession();
         movieSession2.setCinemaHall(cinemaHall2);
         movieSession2.setMovie(movie2);
-        movieSession2.setShowTime(time);
+        movieSession2.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession2);
 
         // User test
-        UserService userService = (UserService) injector.getInstance(UserService.class);
-        AuthenticationService authenticationService =
-                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+
         User user = new User();
 
         user.setEmail("test@gmail.com");
         user.setPassword("pass");
-            user = authenticationService.register(user.getEmail(), user.getPassword());
+        AuthenticationService authenticationService = (AuthenticationService)
+                injector.getInstance(AuthenticationService.class);
+        user = authenticationService.register(user.getEmail(), user.getPassword());
         User user2 = null;
         try {
             user2 = authenticationService.login("test@gmail.com", "pass");
@@ -83,23 +81,25 @@ public class Main {
         }
 
         // Shopping cart test
-        ShoppingCartService shoppingCartService = (ShoppingCartService)
-                injector.getInstance(ShoppingCartService.class);
-        ShoppingCartDao shoppingCartDao = (ShoppingCartDao)injector.getInstance(ShoppingCartDao.class);
-
-        TicketDao ticketDao = (TicketDao) injector.getInstance(TicketDao.class);
         Ticket ticket = new Ticket();
         ticket.setUser(user);
         ticket.setShowTime(movieSession.getShowTime());
         ticket.setCinemaHall(cinemaHall);
         ticket.setMovie(movie);
+        TicketDao ticketDao = (TicketDao)
+                injector.getInstance(TicketDao.class);
         ticket = ticketDao.add(ticket);
 
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.addTicket(ticket);
         shoppingCart.setUser(user);
+        ShoppingCartDao shoppingCartDao = (ShoppingCartDao)
+                injector.getInstance(ShoppingCartDao.class);
         shoppingCartDao.add(shoppingCart);
-        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        OrderService orderService = (OrderService)
+                injector.getInstance(OrderService.class);
+        ShoppingCartService shoppingCartService = (ShoppingCartService)
+                injector.getInstance(ShoppingCartService.class);
         List<Ticket> tickets = shoppingCartService.getByUser(user).getTickets();
         orderService.completeOrder(tickets, user);
     }

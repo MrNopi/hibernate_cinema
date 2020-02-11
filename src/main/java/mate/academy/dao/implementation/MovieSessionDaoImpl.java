@@ -1,13 +1,12 @@
 package mate.academy.dao.implementation;
 
+import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.time.LocalDate;
-import java.util.List;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Dao;
-import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -43,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             criteriaQuery
                     .select(root)
                     .where(builder.greaterThanOrEqualTo(root
-                                    .get("showTime").as(LocalDate.class), date));
+                            .get("showTime").as(LocalDate.class), date));
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Unable to find available session", e);

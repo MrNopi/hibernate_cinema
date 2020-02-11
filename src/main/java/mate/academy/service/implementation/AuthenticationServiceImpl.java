@@ -1,6 +1,5 @@
 package mate.academy.service.implementation;
 
-import java.util.function.BiFunction;
 import mate.academy.dao.UserDao;
 import mate.academy.exception.AuthenticationException;
 import mate.academy.lib.Inject;
@@ -11,7 +10,6 @@ import mate.academy.util.HashUtil;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserDao userDao;
-
 
     @Override
     public User login(String email, String password) throws AuthenticationException {

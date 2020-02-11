@@ -1,9 +1,9 @@
 package mate.academy.dao.implementation;
 
+import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
 import mate.academy.dao.OrderDao;
 import mate.academy.lib.Dao;
 import mate.academy.model.Order;
@@ -19,7 +19,7 @@ public class OrderDaoImpl implements OrderDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Long orderId = (Long)session.save(order);
+            Long orderId = (Long) session.save(order);
             transaction.commit();
             order.setId(orderId);
         } catch (Exception e) {
@@ -33,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrderHistory(User user) {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             Root<Order> root = criteriaBuilder.createQuery().from(Order.class);
             CriteriaQuery<Order> query = criteriaBuilder.createQuery(Order.class);

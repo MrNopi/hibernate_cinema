@@ -1,7 +1,7 @@
 package mate.academy.dao.implementation;
 
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import javax.persistence.criteria.CriteriaQuery;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
