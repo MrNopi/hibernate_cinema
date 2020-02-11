@@ -17,7 +17,7 @@ public class OrderServiceImpl implements OrderService {
     @Inject
     private ShoppingCartService shoppingCartService;
     @Inject
-    private gOrderDao orderDao;
+    private OrderDao orderDao;
 
     @Override
     public Order completeOrder(List<Ticket> tickets, User user) {
