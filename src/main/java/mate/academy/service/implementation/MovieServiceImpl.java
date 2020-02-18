@@ -2,12 +2,12 @@ package mate.academy.service.implementation;
 
 import java.util.List;
 import mate.academy.dao.MovieDao;
-import mate.academy.lib.Inject;
 import mate.academy.model.Movie;
 import mate.academy.service.MovieService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MovieServiceImpl implements MovieService {
-    @Inject
+    @Autowired
     private MovieDao movieDao;
 
     @Override
