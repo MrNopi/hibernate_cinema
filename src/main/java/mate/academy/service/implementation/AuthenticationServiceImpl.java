@@ -2,13 +2,13 @@ package mate.academy.service.implementation;
 
 import mate.academy.dao.UserDao;
 import mate.academy.exception.AuthenticationException;
-import mate.academy.lib.Inject;
 import mate.academy.model.User;
 import mate.academy.service.AuthenticationService;
 import mate.academy.util.HashUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Inject
+    @Autowired
     private UserDao userDao;
 
     @Override

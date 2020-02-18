@@ -3,12 +3,12 @@ package mate.academy.service.implementation;
 import java.time.LocalDate;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
-import mate.academy.lib.Inject;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MovieSessionServiceImpl implements MovieSessionService {
-    @Inject
+    @Autowired
     private MovieSessionDao movieSessionDao;
 
     @Override

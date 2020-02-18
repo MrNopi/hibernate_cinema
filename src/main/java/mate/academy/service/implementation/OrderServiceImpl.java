@@ -3,20 +3,20 @@ package mate.academy.service.implementation;
 import java.time.LocalDateTime;
 import java.util.List;
 import mate.academy.dao.OrderDao;
-import mate.academy.lib.Inject;
-import mate.academy.lib.Service;
 import mate.academy.model.Order;
 import mate.academy.model.ShoppingCart;
 import mate.academy.model.Ticket;
 import mate.academy.model.User;
 import mate.academy.service.OrderService;
 import mate.academy.service.ShoppingCartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Inject
+    @Autowired
     private ShoppingCartService shoppingCartService;
-    @Inject
+    @Autowired
     private OrderDao orderDao;
 
     @Override
