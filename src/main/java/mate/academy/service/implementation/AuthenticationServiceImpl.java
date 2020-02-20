@@ -6,7 +6,9 @@ import mate.academy.model.User;
 import mate.academy.service.AuthenticationService;
 import mate.academy.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserDao userDao;

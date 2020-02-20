@@ -6,7 +6,9 @@ import mate.academy.dao.MovieSessionDao;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MovieSessionServiceImpl implements MovieSessionService {
     @Autowired
     private MovieSessionDao movieSessionDao;

@@ -20,7 +20,7 @@ public class MovieDaoImpl implements MovieDao {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            Long movieId = (Long)session.save(movie);
+            Long movieId = (Long) session.save(movie);
             transaction.commit();
             movie.setMovieId(movieId);
         } catch (Exception e) {
@@ -39,6 +39,13 @@ public class MovieDaoImpl implements MovieDao {
                     .createQuery(Movie.class);
             criteriaQuery.from(Movie.class);
             return session.createQuery(criteriaQuery).getResultList();
+        }
+    }
+
+    @Override
+    public Movie getById(Long movieId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Movie.class, movieId);
         }
     }
 }

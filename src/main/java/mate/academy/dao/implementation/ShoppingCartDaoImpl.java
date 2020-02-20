@@ -42,6 +42,13 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     }
 
     @Override
+    public ShoppingCart getByUserId(Long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(ShoppingCart.class, userId);
+        }
+    }
+
+    @Override
     public void update(ShoppingCart shoppingCart) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {

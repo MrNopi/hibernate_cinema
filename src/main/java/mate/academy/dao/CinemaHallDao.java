@@ -7,4 +7,6 @@ public interface CinemaHallDao {
     CinemaHall add(CinemaHall t);
 
     List<CinemaHall> getAll();
+
+    CinemaHall getById(Long cinemaHallId);
 }
