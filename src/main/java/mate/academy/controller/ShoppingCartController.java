@@ -33,7 +33,8 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/add-movie-session")
-    public String addMovieSession(@RequestBody MovieSessionDto movieSessionDto, @RequestParam Long userId) {
+    public String addMovieSession(@RequestBody MovieSessionDto movieSessionDto,
+                                  @RequestParam Long userId) {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHallService.getById(movieSessionDto.getCinemaHallId()));
         movieSession.setMovie(movieService.getMovieById(movieSessionDto.getMovieId()));
@@ -47,9 +48,9 @@ public class ShoppingCartController {
         ShoppingCart cart = shoppingCartService.getByUserId(userId);
         ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
         shoppingCartDto.setTickets(cart.getTickets()
-        .stream()
-        .map(this::convertObjectToDto)
-        .collect(Collectors.toList()));
+                .stream()
+                .map(this::convertObjectToDto)
+                .collect(Collectors.toList()));
         return shoppingCartDto;
     }
 

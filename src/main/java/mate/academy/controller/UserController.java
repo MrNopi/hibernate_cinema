@@ -24,7 +24,7 @@ public class UserController {
         return convertToUserResponseDto(user);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String add(@RequestBody UserRequestDto userRequestDto) {
         User user = convertFromUserRequestDto(userRequestDto);
         userService.add(user);

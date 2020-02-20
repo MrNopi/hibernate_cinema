@@ -1,8 +1,5 @@
 package mate.academy.model.dto;
 
-import java.time.LocalDateTime;
-import mate.academy.model.CinemaHall;
-
 public class MovieSessionDto {
     private Long movieId;
     private Long cinemaHallId;

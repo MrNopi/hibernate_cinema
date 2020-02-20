@@ -1,15 +1,10 @@
 package mate.academy.controller;
 
-import javax.swing.text.DateFormatter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-import javafx.util.converter.LocalDateStringConverter;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.model.MovieSession;
 import mate.academy.model.dto.MovieSessionDto;
@@ -24,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/movie-session")
+@RequestMapping("/movie-sessions")
 public class MovieSessionController {
     @Autowired
     private MovieSessionService movieSessionService;
@@ -32,8 +27,12 @@ public class MovieSessionController {
     private MovieService movieService;
     @Autowired
     private CinemaHallDao cinemaHallDao;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("M.dd.yyyy HH:mm");
+    private static final DateTimeFormatter DATE_FORMATTER =
+            DateTimeFormatter.ofPattern("M.dd.yyyy");
 
-    @PostMapping("/")
+    @PostMapping
     public String add(@RequestBody MovieSessionDto movieSessionDto) {
         movieSessionService.add(convertFromDto(movieSessionDto));
         return "Success";
@@ -42,8 +41,7 @@ public class MovieSessionController {
     @GetMapping("/sessions")
     public List<MovieSessionDto> getAllSessions(@RequestParam Long movieId,
                                                 @RequestParam String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M.dd.yyyy");
-            LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDate = LocalDate.parse(date, DATE_FORMATTER);
         return movieSessionService.findAvailableSessions(movieId, localDate)
                 .stream()
                 .map(this::convertToDto)
@@ -60,8 +58,8 @@ public class MovieSessionController {
 
     private MovieSession convertFromDto(MovieSessionDto dto) {
         MovieSession movieSession = new MovieSession();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M.dd.yyyy HH:mm");
-        movieSession.setShowTime(LocalDateTime.parse(dto.getShowTime(), formatter));
+
+        movieSession.setShowTime(LocalDateTime.parse(dto.getShowTime(), DATE_TIME_FORMATTER));
         movieSession.setMovie(movieService.getMovieById(dto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallDao.getById(dto.getCinemaHallId()));
         return movieSession;

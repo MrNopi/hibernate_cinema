@@ -18,13 +18,13 @@ public class CinemaHallController {
     @Autowired
     private CinemaHallService cinemaHallService;
 
-    @PostMapping("/")
+    @PostMapping
     public String addCinemaHall(@RequestBody CinemaHallDto cinemaHallDto) {
         cinemaHallService.add(convertFromDto(cinemaHallDto));
         return "Success";
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<CinemaHallDto> getAllCinemaHalls() {
         return cinemaHallService.getAll().stream()
         .map(this::convertToDto)

@@ -20,7 +20,7 @@ public class MovieDaoImpl implements MovieDao {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            Long movieId = (Long)session.save(movie);
+            Long movieId = (Long) session.save(movie);
             transaction.commit();
             movie.setMovieId(movieId);
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public Movie getById(Long movieId) {
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.get(Movie.class, movieId);
         }
     }
