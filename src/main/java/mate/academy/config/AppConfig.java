@@ -2,6 +2,12 @@ package mate.academy.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
+import mate.academy.model.CinemaHall;
+import mate.academy.model.Movie;
+import mate.academy.model.MovieSession;
+import mate.academy.model.Order;
+import mate.academy.model.ShoppingCart;
+import mate.academy.model.Ticket;
 import mate.academy.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +46,8 @@ public class AppConfig {
         props.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setAnnotatedClasses(CinemaHall.class, Movie.class, MovieSession.class,
+                Order.class, ShoppingCart.class, Ticket.class, User.class);
         return factoryBean;
     }
 }

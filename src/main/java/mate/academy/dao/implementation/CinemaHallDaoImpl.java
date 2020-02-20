@@ -44,4 +44,11 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             throw new RuntimeException("Unable to get all cinema halls", e);
         }
     }
+
+    @Override
+    public CinemaHall getById(Long cinemaHallId) {
+        try(Session session = sessionFactory.openSession()) {
+            return session.get(CinemaHall.class, cinemaHallId);
+        }
+    }
 }
