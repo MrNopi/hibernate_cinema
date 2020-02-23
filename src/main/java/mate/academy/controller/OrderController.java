@@ -63,9 +63,9 @@ public class OrderController {
         OrderResponseDto orderResponseDto = new OrderResponseDto();
         orderResponseDto.setOrderTime(order.getOrderDate());
         orderResponseDto.setTickets(order.getTickets()
-        .stream()
-        .map(this::convertToTicketDto)
-        .collect(Collectors.toList()));
+                .stream()
+                .map(this::convertToTicketDto)
+                .collect(Collectors.toList()));
         orderResponseDto.setUserId(order.getUser().getId());
         return orderResponseDto;
     }
